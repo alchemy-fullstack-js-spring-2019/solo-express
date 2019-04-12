@@ -1,0 +1,27 @@
+{
+  "name": "solo-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/parkerchristian/solo-express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/parkerchristian/solo-express/issues"
+  },
+  "homepage": "https://github.com/parkerchristian/solo-express#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "jest": "^24.7.1"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
