@@ -1,0 +1,28 @@
+{
+  "name": "solo-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose",
+    "test:watch": "npm run test -- --watch",
+    "start": "node lib/index.js"
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chrislupdx/solo-express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chrislupdx/solo-express/issues"
+  },
+  "homepage": "https://github.com/chrislupdx/solo-express#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "express": "^4.16.4",
+    "jest": "^24.7.1"
+  }
+}
