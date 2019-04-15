@@ -63,5 +63,18 @@ describe('Testing chirp message board', () => {
         });
       });
   });
+
+  it('deletes a chirp, using id', () => {
+    return Chirps.create({ handle: 'Tweety', body: 'I did see a putty tat' })
+      .then(createdChirp => {
+        return request(app)
+          .delete(`/chirps/${createdChirp._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          deleted: 1
+        });
+      });
+  });
 });
 

@@ -39,3 +39,11 @@ module.exports = Router()
         res.send(updatedChirp);
       });
   })
+
+  .delete('/:id', (req, res) => {
+    const { id } = req.params;
+    Chirps.findByIdAndDelete(id)
+      .then(deletedObj => {
+        res.send(deletedObj);
+      });
+  })
