@@ -59,4 +59,26 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('can update a tweet by id', () => {
+    return Tweets.create({
+      handle: 'leslie',
+      body: 'i want to update this'
+    })
+      .then(createdTweet => {
+        return request(app)
+          .put(`/tweets/${createdTweet._id}`)
+          .send({
+            handle: 'leslie',
+            body: 'this is now updated'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'leslie',
+          body: 'this is now updated',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
