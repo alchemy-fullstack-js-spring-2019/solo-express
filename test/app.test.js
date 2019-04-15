@@ -49,4 +49,21 @@ describe('tweet routes', () => {
       });
   });
 
+  it('updates a tweet', () => {
+    return Tweet
+      .create({ handle: 'tseter', text: 'put test' })
+      .then(originalTweet => {
+        return request(app)
+          .put(`/tweets/${originalTweet._id}`)
+          .send({ handle: 'tester', text: 'fixed tweet' });
+      })
+      .then(updatedTweet => {
+        expect(updatedTweet.body).toEqual({ 
+          handle: 'tester', 
+          text: 'fixed tweet',
+          _id: expect.any(String)
+        });
+      });
+  });
+
 });
