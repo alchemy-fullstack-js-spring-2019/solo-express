@@ -1,10 +1,15 @@
 const app = require('../lib/app');
 const request = require('supertest');
 const Tweet = require('../lib/models/Tweets');
+const User = require('../lib/models/Users');
 
 describe('app routes', () => {
   afterEach(() => {
     return Tweet.drop();
+  });
+
+  afterEach(() => {
+    return User.drop();
   });
 
   it('can make a new tweet', () => {
@@ -77,6 +82,21 @@ describe('app routes', () => {
       .then(res => {
         expect(res.body).toEqual({
           deleted: 1
+        });
+      });
+  });
+  it('can make a new user', () => {
+    return request(app)
+      .post('/users')
+      .send({ 
+        name: 'meg',
+        sign: 'aries'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'meg',
+          sign: 'aries',
+          _id: expect.any(String)
         });
       });
   });
