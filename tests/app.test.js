@@ -1,4 +1,5 @@
 const app = require('../lib/app');
+const request = require('supertest');
 
 describe('app routes', () => {
   it('can make a new tweet', () => {
