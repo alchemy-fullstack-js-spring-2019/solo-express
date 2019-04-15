@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 const Tweet = require('../lib/models/Tweet');
 
-describe.skip('ROUTE TESTS', () => {
+describe('ROUTE TESTS', () => {
 
   afterEach(() => {
     return Tweet.drop();
@@ -47,6 +47,26 @@ describe.skip('ROUTE TESTS', () => {
         expect(res.body).toEqual({
           handle: 'Parker',
           twit: '√',
+          _id: expect.any(String)
+        });
+      });
+  });
+
+  it('update a tweet by id', () => {
+    return Tweet
+      .create({ handle: 'Parker', twit: 'put' })
+      .then(newTweet => {
+        return request(app)
+          .put(`/tweets/${newTweet._id}`)
+          .send({
+            handle: 'Parker',
+            twit: 'put updated twit'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'Parker',
+          twit: 'put updated twit',
           _id: expect.any(String)
         });
       });
