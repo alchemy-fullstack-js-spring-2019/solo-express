@@ -134,9 +134,3 @@ describe('tags resource', () => {
 
 });
 
-// .create({ handle: 'chris', body: 'my tweet' })
-// .then(createdTweet => {
-//   return request(app)
-//     .get(`/tweets/${createdTweet._id}`);
-// })
-
