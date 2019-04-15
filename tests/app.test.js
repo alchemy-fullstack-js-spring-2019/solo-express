@@ -27,10 +27,17 @@ describe('app routes', () => {
       .create({ handle: 'bob', body: 'I love tweeting' })
       .then(() => {
         return request(app)
-          .get('./tweet');
+          .get('/tweets');
       })
       .then(res => {
         expect(res.body).toHaveLength(1);
       });
   });
+  it('can find a tweet by id', () => {
+    return Tweet
+      .create({ handle: 'bob', body: 'my cool tweet' })
+      .then(() => {
+        return 
+      })
+  })
 });
