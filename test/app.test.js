@@ -1,10 +1,14 @@
 const request = require('supertest');
 const app = require('../lib/app');
 const Tweet = require('../lib/models/Tweet');
+const Tag = require('../lib/models/Tag');
 
 describe('app routes', () => {
-  afterEach(() => {
+  beforeEach(() => {
     return Tweet.drop();
+  });
+  beforeEach(() => {
+    return Tag.drop();
   });
 
   it('can create a new tweet', () => {
@@ -93,6 +97,18 @@ describe('app routes', () => {
           name: '#js', 
           _id: expect.any(String)
         });
+      });
+  });
+
+  it('can get a list of tags', () => {
+    return Tag
+      .create({ name: '#js' })
+      .then(() => {
+        return request(app)
+          .get('/tags');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
       });
   });
 });
