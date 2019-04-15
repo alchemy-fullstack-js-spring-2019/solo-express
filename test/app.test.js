@@ -151,6 +151,4 @@ describe('bug routes', () => {
         expect(res.body).toEqual({ deleted: 1 });
       });      
   });
-
-
 });
