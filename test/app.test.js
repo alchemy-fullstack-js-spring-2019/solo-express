@@ -170,4 +170,19 @@ describe('tags routes', () => {
         });
       });
   });
+
+  it('can delete a tag by id', () => {
+    return Tags.create({
+      name: '#ls'
+    })
+      .then(createdTag => {
+        return request(app)
+          .delete(`/tags/${createdTag._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          deleted: 1
+        });
+      });
+  });
 });
