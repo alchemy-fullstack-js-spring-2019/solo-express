@@ -1,10 +1,21 @@
-const app = require('app');
+const app = require('../lib/app');
 const request = require('supertest');
 
-describe('responds with hi at /hello', () => {
-    return request(app)
-        .get('/hello')
-        .then(res => {
-            expect(res.text).toEqual('hi');
+describe('tweet router', () => {
+    it('creates a new tweet', () => {
+        return request(app)
+        .post('/tweets')
+        .send({
+            handle: 'ben',
+            body: 'hello there'
         })
+        .then(res => {
+            expect(res.body).toEqual({
+                handle: 'ben',
+                body: 'hello there',
+                _id: expect.any(String)
+            });
+        });
+    });
+
 });
