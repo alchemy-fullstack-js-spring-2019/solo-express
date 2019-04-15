@@ -1,7 +1,8 @@
 const request = require('supertest');
 const app = require('../lib/app');
 const mkdirp = require('mkdirp');
-const Tweets = require('../lib/models/Tweets');
+const Tweets = require('../lib/models/Tweet');
+const Tags = require('../lib/models/Tag');
 
 describe('tweets routes', () => {
   beforeAll(done => {
@@ -94,6 +95,30 @@ describe('tweets routes', () => {
       .then(res => {
         expect(res.body).toEqual({
           deleted: 1
+        });
+      });
+  });
+});
+
+describe('tags routes', () => {
+  beforeAll(done => {
+    mkdirp('./data/tags', done);
+  });
+
+  afterEach(() => {
+    return Tags.drop();
+  });
+
+  it('can create a new tag', () => {
+    return request(app)
+      .post('/tags')
+      .send({
+        name: '#ls'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: '#ls',
+          _id: expect.any(String)
         });
       });
   });
