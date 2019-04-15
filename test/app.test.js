@@ -105,7 +105,7 @@ describe('app routes', () => {
             })
             .then(tweet => {
                 return request(app)
-                    .delete(`/tweets/${tweet._id}`)
+                    .delete(`/tweets/${tweet._id}`);
             })
             .then(res => {
                 expect(res.body).toEqual({ deleted: 1 });
