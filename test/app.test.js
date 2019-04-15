@@ -1,74 +1,74 @@
 const request = require('supertest');
 const app = require('../lib/app');
-const Tweet = require('../lib/models/Tweet');
+const Tweet = require('../lib/models/Tweets');
 
 describe('app routes', () => {
 
-    //drop tweets nafterEeach()
+  //drop tweets nafterEeach()
 
-    it('can create a new tweet', () => {
+  it('can create a new tweet', () => {
+    return request(app)
+      .post('/tweets')
+      .send({
+        handle: 'ryan',
+        body: 'my first tweet'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'ryan',
+          body: 'my first tweet',
+          _id: expect.any(String)
+        });
+      });
+  });
+  it('can get a list of tweets', () => {
+    return Tweet.create({ handle: 'olli', body: 'my tweet' })
+      .then(() => {
         return request(app)
-            .post('/tweets')
-            .send({
-                handle: 'ryan',
-                body: 'my first tweet'
-            })
-            .then(res => {
-                expect(res.body).toEqual({
-                    handle: 'ryan',
-                    body: 'my first tweet',
-                    _id: expect.any(String)
-                });
-            });
-    });
-    it('can get a list of tweets', () => {
-        return Tweet.create({ handle: 'olli', body: 'my tweet' })
-            .then(() => {
-                return request(app)
-                    .get('./tweets');
-            })
-            .then(res => {
-                expect(res.body).toHaveLength(1);
-            })
-    })
+          .get('./tweets');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 
 });
 //need to test
 it('can get a tweet by id', () => {
-    return Tweet
-        .create({ handle: 'olli', body: 'my tweet' })
-        .then(createdTweet=>{
-            return request(app)
-            .get(`/tweets/${createdTweet._id}`);
-        })
-        .then(res=>{
-            expect(res.body).toEqual({ handle:'olli' , body: 'my tweet', _id: expect.any(String)})
-        })
-})
+  return Tweet
+    .create({ handle: 'olli', body: 'my tweet' })
+    .then(createdTweet=>{
+      return request(app)
+        .get(`/tweets/${createdTweet._id}`);
+    })
+    .then(res=>{
+      expect(res.body).toEqual({ handle:'olli', body: 'my tweet', _id: expect.any(String) });
+    });
+});
 
 //not tested
 it('can update a tweet by id,', ()=>{
-    return Tweet.create({handle: 'ryan', body:'my tweet'})
+  return Tweet.create({ handle: 'ryan', body:'my tweet' })
     .then(tweet=>{
-        return request(app)
+      return request(app)
         .put(`/tweets/${tweet._id}`)
         .send({
-            handle: 'ryan',
-            body: 'better tweeet'
+          handle: 'ryan',
+          body: 'better tweeet'
         })
         .then(updatedTweet=>{
-            expect(updatedTweet.body).toEqual({ handle:'ryan', body:'better tweet', _id: expect.any(String)})
-        })
-    })
-})
+          expect(updatedTweet.body).toEqual({ handle:'ryan', body:'better tweet', _id: expect.any(String) });
+        });
+    });
+});
 //not finished
 it('can delete a tweet by id', ()=>{
-    return Tweet.create({handle:'Ryan', body:'your weet'})
+  return Tweet.create({ handle:'Ryan', body:'your weet' })
     .then(tweet=>{
-        return request(app)
-        .delete(`/tweets/${tweet._id}`)
+      return request(app)
+        .delete(`/tweets/${tweet._id}`);
     })
     .then(deleteCount=>{
-        expect(deleteCount).toEqual({deleted:1})
-    })
-})
+      expect(deleteCount).toEqual({ deleted:1 });
+    });
+});
