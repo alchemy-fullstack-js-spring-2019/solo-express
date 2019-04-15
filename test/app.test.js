@@ -21,4 +21,15 @@ describe('app routes', () => {
         });
       });
   });
+  it('gets a list of tweets', () => {
+    return Tweet
+      .create({ handle: 'dave', body: 'a tweet' })
+      .then(() => {
+        return request(app)
+          .get('/tweets');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 });
