@@ -32,4 +32,20 @@ describe('app routes', () => {
         expect(res.body).toHaveLength(1);
       });
   });
+
+  it('can get a tweet by id', () => {
+    return Tweet
+      .create({ handle: 'dave', body: 'a tweet' })
+      .then(createdTweet => {
+        return request(app)
+          .get(`/tweets/${createdTweet._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'dave',
+          body: 'a tweet',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
