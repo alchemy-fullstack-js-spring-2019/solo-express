@@ -3,11 +3,19 @@ const app = require('../lib/app');
 
 
 describe('app routes', () => {
-    it('responds with hi at /hello', () => {
+    it('can create a new tweet', () => {
         return request(app)
-            .get('/hello')
+            .post('/tweets')
+            .send({
+                handle: 'bonnie',
+                body: 'my first tweet'
+            })
             .then(res => {
-                expect(res.body).toEqual({ name: 'bonnie' });
+                expect(res.body).toEqual({
+                    handle: 'bonnie',
+                    body: 'my first tweet',
+                    _id: expect.any(String)
+                });
             });
     });
 });
