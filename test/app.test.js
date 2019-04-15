@@ -48,6 +48,21 @@ describe('testing routes', () => {
         });
       });
   });
+  it('can update a tweet by id', () => {
+    return TweetStore
+      .create({ twitterHandle: 'introooomode', tweet: 'heyhi' })
+      .then(tweet => {
+        return request(app)
+          .put(`/tweets/${tweet._id}`)
+          .send({ 
+            twitterHandle: 'introooomode',
+            tweet: 'UPDATED TWEET'
+          });
+      }) 
+      .then(serverResponse => {
+        console.log(serverResponse.body);
+      });
+  });
 
 
 });
