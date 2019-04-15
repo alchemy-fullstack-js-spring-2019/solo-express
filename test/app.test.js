@@ -1,7 +1,13 @@
 const app = require('../lib/app');
 const request = require('supertest');
+const Tweet = require('../lib/models/Tweet');
 
 describe('tweet routes', () => {
+
+  afterEach(() => {
+    Tweet.drop();
+  });
+
   it('creates a tweet', () => {
     return request(app)
       .post('/tweets')
@@ -14,4 +20,21 @@ describe('tweet routes', () => {
         });
       });
   });
+  
+  it('reads a tweet with id', () => {
+    return Tweet
+      .create({ handle: 'tester', text: 'get test' })
+      .then(createdTweet => {
+        return request(app)
+          .get(`/tweets/${createdTweet._id}`);
+      })
+      .then(receivedTweet => {
+        expect(receivedTweet.body).toEqual({
+          handle: 'tester',
+          text: 'get test',
+          _id: expect.any(String)
+        });
+      });
+  });
+
 });
