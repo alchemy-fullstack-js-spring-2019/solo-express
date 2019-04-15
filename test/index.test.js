@@ -2,7 +2,7 @@ const request = require('supertest');
 const app = require('../lib/app');
 const Tweet = require('../lib/models/Tweet');
 
-describe('ROUTE TESTS', () => {
+describe.skip('ROUTE TESTS', () => {
 
   afterEach(() => {
     return Tweet.drop();
