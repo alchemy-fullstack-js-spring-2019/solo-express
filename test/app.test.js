@@ -2,7 +2,7 @@ const app = require('../lib/app');
 const request = require('supertest');
 const Tweet = require('../lib/models/Tweet');
 
-describe('app routes', () => {
+describe('Tweet route', () => {
     afterAll(() => {
         return Tweet.drop();
     });
@@ -27,7 +27,6 @@ describe('app routes', () => {
         return request(app)
             .get('/tweets')
             .then(res => {
-                console.log(res.body);
                 expect(res.body.length).toEqual(1);
             });
     });
@@ -88,5 +87,21 @@ describe('app routes', () => {
                 expect(res.body).toEqual({ deleted: 1 });
             });
     }); 
+});
+
+describe('tag route', () => {
+    it('can create a tag', () => {
+        return request(app)
+            .post('/tags')
+            .send({
+                name: 'Anna'
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    name: 'Anna',
+                    _id: expect.any(String)
+                });
+            });
+    });
 });
 
