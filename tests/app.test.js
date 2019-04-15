@@ -47,5 +47,24 @@ describe('app routes', () => {
           _id: expect.any(String)
         });
       });
-  })
+  });
+  it('can find a tweet by id and update', () => {
+    return Tweet  
+      .create({ handle: 'dignan', tweet: 'you know there\'s nothing to steal from my mom and craig' })
+      .then((createdTweet) => {
+        return request(app)
+          .put(`/tweets/${createdTweet._id}`)
+          .send({ 
+            handle: 'dignan',
+            body: 'bob maplethorpe, potential getaway driver, go!'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'dignan',
+          body: 'bob maplethorpe, potential getaway driver, go!',
+          id: expect.any(String)
+        });
+      });
+  });
 });
