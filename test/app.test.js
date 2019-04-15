@@ -124,6 +124,21 @@ describe('app routes', () => {
           _id: expect.any(String)
         });
       });
-    });
+  });
   
+  it('can update a tag by id', () => {
+    return Tag
+      .create({ name: '#jt' })
+      .then(createdTag => {
+        return request(app)
+          .put(`/tags/${createdTag._id}`)
+          .send({ name: '#js' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: '#js', 
+          _id: expect.any(String)
+        });
+      });
+  });
 });
