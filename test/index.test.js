@@ -72,4 +72,17 @@ describe('ROUTE TESTS', () => {
       });
   });
 
+  it('find by id and delete', () => {
+    return Tweet
+      .create({ handle: 'Parker', twit: 'delete me' })
+      .then(newTweet => {
+        return request(app)
+          .delete(`/tweets/${newTweet._id}`)
+          .then(res => {
+            expect(res.body).toEqual({
+              deleted: 1
+            });
+          });
+      });
+  });
 });
