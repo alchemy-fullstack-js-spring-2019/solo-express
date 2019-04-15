@@ -4,7 +4,9 @@ const Tweet = require('../lib/models/Tweets');
 
 describe('app routes', () => {
 
-  //drop tweets nafterEeach()
+  afterEach(()=>{
+    return Tweet.drop(); 
+  });
 
   it('can create a new tweet', () => {
     return request(app)
@@ -22,13 +24,14 @@ describe('app routes', () => {
       });
   });
   it('can get a list of tweets', () => {
-    return Tweet.create({ handle: 'olli', body: 'my tweet' })
+    return Tweet
+      .create({ handle: 'olli', body: 'my tweet' })
       .then(() => {
         return request(app)
-          .get('./tweets');
+          .get('/tweets');
       })
       .then(res => {
-        expect(res.body).toHaveLength(1);
+        return expect(res.body).toHaveLength(1);
       });
   });
 
@@ -50,14 +53,16 @@ it('can get a tweet by id', () => {
 it('can update a tweet by id,', ()=>{
   return Tweet.create({ handle: 'ryan', body:'my tweet' })
     .then(tweet=>{
+     
       return request(app)
         .put(`/tweets/${tweet._id}`)
         .send({
-          handle: 'ryan',
-          body: 'better tweeet'
+          handle:'test',
+          body: 'better tweet'
         })
         .then(updatedTweet=>{
-          expect(updatedTweet.body).toEqual({ handle:'ryan', body:'better tweet', _id: expect.any(String) });
+         
+          return expect(updatedTweet.body).toEqual({ handle:'test', body:'better tweet', _id: expect.any(String) });
         });
     });
 });
@@ -69,6 +74,7 @@ it('can delete a tweet by id', ()=>{
         .delete(`/tweets/${tweet._id}`);
     })
     .then(deleteCount=>{
-      expect(deleteCount).toEqual({ deleted:1 });
+      console.log('deleteCount', deleteCount);
+      expect(deleteCount.body).toEqual({ deleted:1 });
     });
 });
