@@ -3,7 +3,7 @@ const app = require('../lib/app');
 const mkdirp = require('mkdirp');
 const Tweets = require('../lib/models/Tweets');
 
-describe('app routes', () => {
+describe('tweets routes', () => {
   beforeAll(done => {
     mkdirp('./data/tweets', done);
   });
