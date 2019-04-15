@@ -126,4 +126,23 @@ describe('app routes', () => {
         });
       });
   });
+  it('can find a user by id and update', () => {
+    return User
+      .create({ name: 'kelly', sign: 'capricorn' })
+      .then((createdUser) => {
+        return request(app)
+          .put(`/users/${createdUser._id}`)
+          .send({
+            name: 'kellie', 
+            sign: 'capricorn'
+          })
+          .then(res => {
+            expect(res.body).toEqual({
+              name: 'kellie',
+              sign: 'capricorn',
+              _id: expect.any(String)
+            });
+          });
+      });
+  });
 });
