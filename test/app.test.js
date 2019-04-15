@@ -47,5 +47,20 @@ describe('Testing chirp message board', () => {
         });
       });
   });
+
+  it('it updates a chirp body', () => {
+    return Chirps.create({ handle: 'Robyn', body: 'grrr' })
+      .then(createdChirp => {
+        return request(app)
+          .put(`/chirps/${createdChirp._id}`, { handle: 'Robyn', body: 'poo-tee-weet' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'Robyn',
+          body: 'poo-tee-weet',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
 
