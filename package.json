@@ -9,7 +9,9 @@
     "jest": "^24.7.1",
     "nodemon": "^1.18.11"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "supertest": "^4.0.2"
+  },
   "scripts": {
     "test": "jest --verbose",
     "test:watch": "npm run test -- --watch",

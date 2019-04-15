@@ -1,4 +1,4 @@
-const req = require('http');
+const req = require('supertest');
 const app = require('../lib/app');
 const Tweet = require('../lib/models/Tweet');
 
@@ -26,7 +26,7 @@ describe('it responds to app routes', () => {
   });
   it('can get a list of tweets', () => {
     return Tweet
-      .create({ handle: 'laura', body: 'i\'m a twit' })
+      .create({ handle: 'laura', body: 'a twit' })
       .then(() => {
         return req(app)
           .get('/tweets');
@@ -38,7 +38,7 @@ describe('it responds to app routes', () => {
 
   it('can get a tweet by id', () => {
     return Tweet
-      .create({ handle: 'laura', body: 'i\'m a twit' })
+      .create({ handle: 'laura', body: 'a twit' })
       .then(createdTweet => {
         return req(app)
           .get(`/tweets/${createdTweet._id}`);
@@ -53,19 +53,19 @@ describe('it responds to app routes', () => {
   });
 
   it('can update a tweet by id', () => {
-    return Tweet.create({ handle: 'laura', body: 'i\'m a twit' })
+    return Tweet.create({ handle: 'laura', body: 'the good twit' })
       .then(tweet => {
         return req(app)
           .put(`/tweets/${tweet._id}`)
           .send({
             handle: 'laura',
-            body: 'the good tweet'
+            body: 'the good twit'
           });
       })
       .then(res => {
         expect(res.body).toEqual({
-          handle: 'ryan',
-          body: 'the good tweet',
+          handle: 'laura',
+          body: 'the good twit',
           _id: expect.any(String)
         });
       });
