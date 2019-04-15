@@ -135,4 +135,20 @@ describe('tags routes', () => {
         expect(res.body).toHaveLength(1);
       });
   });
+
+  it('can get a tag by id', () => {
+    return Tags.create({
+      name: '#ls'
+    })
+      .then(createdTag => {
+        return request(app)
+          .get(`/tags/${createdTag._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: '#ls',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
