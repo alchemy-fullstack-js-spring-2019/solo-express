@@ -74,7 +74,7 @@ it('can delete a tweet by id', ()=>{
         .delete(`/tweets/${tweet._id}`);
     })
     .then(deleteCount=>{
-      console.log('deleteCount', deleteCount);
+     
       expect(deleteCount.body).toEqual({ deleted:1 });
     });
 });
