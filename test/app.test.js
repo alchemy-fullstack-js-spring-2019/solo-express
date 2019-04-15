@@ -1,6 +1,6 @@
 const req = require('http');
 const app = require('../lib/app');
-const Tweet = require('../lib/models/Tweets');
+const Tweet = require('../lib/models/Tweet');
 
 
 describe('it responds to app routes', () => {
