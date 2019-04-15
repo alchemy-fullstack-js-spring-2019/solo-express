@@ -24,6 +24,11 @@
   "homepage": "https://github.com/leslieeshea/solo-express#readme",
   "devDependencies": {
     "eslint": "^5.16.0",
-    "jest": "^24.7.1"
+    "jest": "^24.7.1",
+    "nodemon": "^1.18.11",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "express": "^4.16.4"
   }
 }
