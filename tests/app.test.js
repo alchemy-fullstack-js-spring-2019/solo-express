@@ -111,4 +111,19 @@ describe('app routes', () => {
         expect(res.body).toHaveLength(1);
       });
   });
+  it('can find a user by id', () => {
+    return User
+      .create({ name: 'patrick', sign: 'pisces' })
+      .then((createdUser) => {
+        return request(app)
+          .get(`/users/${createdUser._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'patrick',
+          sign: 'pisces',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
