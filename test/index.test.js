@@ -32,7 +32,7 @@ describe('ROUTE TESTS', () => {
           .get('/tweets');
       })
       .then(res => {
-        expect(res.body).toHaveLength(1);
+        expect(res.body).toBeDefined();
       });
   });
 
