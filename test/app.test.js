@@ -27,4 +27,18 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('can get a list of tweets', () => {
+    return Tweets.create({
+      handle: 'ryan',
+      body: 'another tweet'
+    })
+      .then(() => {
+        return request(app)
+          .get('/tweets');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 });
