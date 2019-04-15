@@ -1,6 +1,7 @@
 const app = require('../lib/app');
 const request = require('supertest');
 const Tweet = require('../lib/models/Tweet');
+const Tag = require('../lib/models/Tag');
 
 describe('app routes', () => {
   afterEach(() => {
@@ -84,4 +85,58 @@ describe('app routes', () => {
       });
   });
 });
+
+describe('tags resource', () => {
+  afterEach(() => {
+    return Tag.drop();
+  });
+
+  it('can return a new tag', () => {
+    return request(app)
+      .post('/tags')
+      .send({
+        name: 'recreation'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'recreation',
+          _id: expect.any(String)
+        });
+      });
+  });
+
+  it('can get a list of tags', () => {
+    return Tag
+      .create({ name: 'work' })
+      .then(() => {
+        return request(app)
+          .get('/tags');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
+
+  it('can get a tag by id', () => {
+    return Tag
+      .create({ name: 'YouGotMeByMyId!', _id: 'mockID' })
+      .then(createdTag => {
+        return request(app)
+          .get(`/tags/${createdTag._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'YouGotMeByMyId!',
+          _id: expect.any(String)
+        });
+      });
+  });
+
+});
+
+// .create({ handle: 'chris', body: 'my tweet' })
+// .then(createdTweet => {
+//   return request(app)
+//     .get(`/tweets/${createdTweet._id}`);
+// })
 
