@@ -130,5 +130,21 @@ describe('tag route', () => {
             });
             
     });
+
+    it('updates tag by ID', () => {
+        return Tag
+            .create({ name: 'annas tag' })
+            .then(tag => {
+                return request(app)
+                    .put(`/tags/${tag._id}`)
+                    .send({ name: 'annas updated tag' });
+            })
+            .then(res => {
+                expect(res.body).toEqual({ 
+                    name: 'annas updated tag',
+                    _id: expect.any(String)
+                });
+            });
+    });
 });
 
