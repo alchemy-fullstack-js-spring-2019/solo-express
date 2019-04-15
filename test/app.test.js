@@ -36,5 +36,17 @@ describe('tweet routes', () => {
         });
       });
   });
+  
+  it('reads all tweets', () => {
+    return Tweet
+      .create({ handle: 'tester', text: 'get test' })
+      .then(() => {
+        return request(app)
+          .get('/tweets');
+      })
+      .then(receivedTweets => {
+        expect(receivedTweets.body).toHaveLength(1);
+      });
+  });
 
 });
