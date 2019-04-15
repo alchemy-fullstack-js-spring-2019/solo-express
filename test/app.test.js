@@ -30,7 +30,7 @@ describe('app routes', () => {
 
   it('can get a list of tweets', () => {
     return Tweets.create({
-      handle: 'ryan',
+      handle: 'leslie',
       body: 'another tweet'
     })
       .then(() => {
@@ -39,6 +39,24 @@ describe('app routes', () => {
       })
       .then(res => {
         expect(res.body).toHaveLength(1);
+      });
+  });
+
+  it('can get a tweet by id', () => {
+    return Tweets.create({
+      handle:'leslie',
+      body: 'anotha one'
+    })
+      .then(createdTweet => {
+        return request(app)
+          .get(`/tweets/${createdTweet._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'leslie',
+          body: 'anotha one',
+          _id: expect.any(String)
+        });
       });
   });
 });
