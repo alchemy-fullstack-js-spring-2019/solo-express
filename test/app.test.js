@@ -46,7 +46,7 @@ describe('app tests', ()=> {
             })
             .then((createdTweet)=> {
                 return request(app)
-                    .get(`/tweets/${createdTweet._id}`) 
+                    .get(`/tweets/${createdTweet._id}`);
             })
             .then(res => {
                 expect(res.body).toEqual({
@@ -56,4 +56,29 @@ describe('app tests', ()=> {
                 });
             });
     });
+
+    it('can update a tweet by id', ()=> {
+        return Tweet
+            .create({
+                handle: 'emily',
+                body: 'my silly tweet'
+            })
+            .then(createdTweet => {
+                return request(app)
+                    .put(`/tweets/${createdTweet._id}`)
+                    .send({
+                        handle: 'emily',
+                        body: 'my really silly tweet'
+                    });
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    handle: 'emily',
+                    body: 'my really silly tweet',
+                    _id: expect.any(String)
+                });
+            });
+    });
+
+    
 });
