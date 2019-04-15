@@ -35,7 +35,7 @@ own file to keep our application small and manageable and keep
 concerns separate.
 
 * create a `lib/models/Tweet.js` file
-  * export a `Store` instance
+  * export a `Store` instance   
 * create a `lib/routes/tweets.js` file
   * create a new router `require('express').Router()`
   * Tweets look like `{ handle: 'ryan', text: 'I am a tweet', _id: '1234' }`
