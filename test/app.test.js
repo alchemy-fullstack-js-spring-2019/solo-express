@@ -26,9 +26,9 @@ describe('app routes', () => {
 
   it('can return all tweets', () => {
     return request(app)
-      .get('/')
+      .get('/tweets')
       .then(res => {
-        expect(res).toEqual([]);
+        expect(res.body).toEqual([]);
       });
   });
 
@@ -41,7 +41,7 @@ describe('app routes', () => {
       })
       .then(tweet => {
         return request(app)
-          .get(`/${tweet._id}`);
+          .get(`/tweets/${tweet.body._id}`);
       })
       .then(res => {
         expect(res.body).toEqual({
@@ -49,6 +49,22 @@ describe('app routes', () => {
           text: 'test',
           _id: expect.any(String)
         });
+      });
+  });
+
+  it('can find a tweet by id and update', () => {
+    return request(app)
+      .post('/tweets')
+      .send({
+        handle: 'test',
+        text: 'test'
+      })
+      .then(tweet => {
+        return request(app)
+          .put(`/tweets/${tweet.body._id}`).send({ handle: 'dog' })
+          .then(res => {
+            expect(res.body.handle).toEqual('dog');
+          });
       });
   });
 });
