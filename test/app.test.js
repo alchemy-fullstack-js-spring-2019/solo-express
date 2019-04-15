@@ -64,7 +64,7 @@ describe('app routes', () => {
     });
 
     it('can get a tweet by id', () => {
-        return Tweet.create({ handle: 'barry', body: 'meow'})
+        return Tweet.create({ handle: 'barry', body: 'meow' })
             .then(createdTweet => {
                 return request(app)
                     .get(`/tweets/${createdTweet._id}`);
@@ -94,6 +94,21 @@ describe('app routes', () => {
                     body: 'something more interesting',
                     _id: expect.any(String)
                 });
+            });
+    });
+
+    it('can delete a tweet by id', () => {
+        return Tweet
+            .create({
+                handle: 'Mama',
+                body: 'Go to sleep'
+            })
+            .then(tweet => {
+                return request(app)
+                    .delete(`/tweets/${tweet._id}`)
+            })
+            .then(res => {
+                expect(res.body).toEqual({ deleted: 1 });
             });
     });
 
