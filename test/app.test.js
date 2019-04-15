@@ -65,5 +65,19 @@ describe('tweet routes', () => {
         });
       });
   });
+  
+  it('deletes a tweet', () => {
+    return Tweet
+      .create({ handle: 'tester', text: 'delete test' })
+      .then(tweetToBeDeleted => {
+        return request(app)
+          .delete(`/tweets/${tweetToBeDeleted._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({ 
+          deleted: 1
+        });
+      });
+  });
 
 });
