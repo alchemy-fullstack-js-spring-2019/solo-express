@@ -38,7 +38,7 @@ describe('app routes', () => {
   it('can get a tweet by the id', () => {
     return Tweet 
       .create({ handle: 'cheri', body: 'my tweet' })
-      .then(createdTweet=> {
+      .then(createdTweet => {
         return request(app)
           .get(`/tweets/${createdTweet._id}`);
       })
@@ -46,6 +46,23 @@ describe('app routes', () => {
         expect(res.body).toEqual({
           handle: 'cheri',
           body: 'my tweet',
+          _id: expect.any(String)
+        });
+      });
+  });
+
+  it('can update a tweet by id', () => {
+    return Tweet
+      .create({ handle: 'cheri', body: 'my twit' })
+      .then(createdTweet => {
+        return request(app)
+          .put(`/tweets/${createdTweet._id}`)
+          .send({ handle: 'cheri', body: 'sweet tweet' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'cheri',
+          body: 'sweet tweet',
           _id: expect.any(String)
         });
       });
