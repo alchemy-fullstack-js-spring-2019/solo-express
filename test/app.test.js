@@ -20,6 +20,18 @@ describe('tag routes', () => {
         });
       });
   });
+  
+  it('gets all tags', () => {
+    return Tag.create({ name: '#getall' })
+      .then(() => {
+        return request(app)
+          .get('/tags');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
+
 });
 
 describe('tweet routes', () => {
