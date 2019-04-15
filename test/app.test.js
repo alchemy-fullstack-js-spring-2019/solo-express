@@ -45,6 +45,21 @@ describe('tag routes', () => {
         });
       });
   });
+  
+  it('updates a tag by id', () => {
+    return Tag.create({ name: '#badtag' })
+      .then(badTag => {
+        return request(app)
+          .put(`/tags/${badTag._id}`)
+          .send({ name: '#goodtag' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: '#goodtag',
+          _id: expect.any(String)
+        });
+      });
+  });
 
 });
 
