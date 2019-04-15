@@ -80,5 +80,20 @@ describe('app tests', ()=> {
             });
     });
 
-    
+    it('can delete a tweet by id', ()=> {
+        return Tweet
+            .create({
+                handle: 'emily', 
+                body: 'feel cute might delete'
+            })
+            .then(createdTweet => {
+                return request(app)
+                    .delete(`/tweets/${createdTweet._id}`);
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    deleted: 1
+                });
+            });
+    });
 });
