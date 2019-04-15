@@ -1,75 +1,77 @@
 const request = require('supertest');
 const app = require('../lib/app');
-const Tag = require('../lib/models/Tag');
+const Troll = require('../lib/models/Troll');
 
 
 describe('app routes', () => {
   afterEach(() => {
-    return Tag.drop();
+    return Troll.drop();
   });
 
-  it('can create a new tag', () => {
+  it('can create a new troll', () => {
     return request(app)
-      .post('/tags')
+      .post('/trolls')
       .send({
-        name: '#supertesting'
+        handle: 'hideoustroll'
       })
       .then(res => {
         expect(res.body).toEqual({
-          name: '#supertesting',
+          handle: 'hideoustroll',
+          date: expect.any(String),
           _id: expect.any(String)
         });
       });
   });
 
-  it('can return all tags', () => {
+  it('can return all trolls', () => {
     return request(app)
-      .get('/tags')
+      .get('/trolls')
       .then(res => {
         expect(res.body).toEqual([]);
       });
   });
 
-  it('can get a tag by id', () => {
+  it('can get a troll by id', () => {
     return request(app)
-      .post('/tags')
+      .post('/trolls')
       .send({
-        name: '#test',
+        handle: 'testname'
       })
-      .then(tag => {
+      .then(troll => {
         return request(app)
-          .get(`/tags/${tag.body._id}`);
+          .get(`/trolls/${troll.body._id}`);
       })
       .then(res => {
         expect(res.body).toEqual({
-          name: '#test',
+          handle: 'testname',
+          date: expect.any(String),
           _id: expect.any(String)
         });
       });
   });
 
   it('can find a tweet by id and update', () => {
-    return Tag.create({
-      name: '#test'
+    return Troll.create({
+      handle: 'test'
     })
-      .then(tag => {
+      .then(troll => {
         return request(app)
-          .put(`/tags/${tag._id}`).send({ name: '#different' })
+          .put(`/trolls/${troll._id}`).send({ handle: 'different' })
           .then(res => {
-            expect(res.body.name).toEqual('#different');
+            expect(res.body.handle).toEqual('different');
           });
       });
   });
 
-  it('can get a tweet by id', () => {
+  it('can get a troll by id', () => {
     return request(app)
-      .post('/tags')
+      .post('/trolls')
       .send({
-        name: '#test',
+        handle: 'test',
       })
-      .then(tag => {
+      .then(troll => {
         return request(app)
-          .delete(`/tags/${tag.body._id}`);
+          .delete(`/trolls/${troll.body._id}`);
       })
       .then(res => {
         expect(res.body).toEqual({
