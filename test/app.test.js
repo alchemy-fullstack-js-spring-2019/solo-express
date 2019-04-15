@@ -81,4 +81,18 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('can create a new tag', () => {
+    return request(app)
+      .post('/tags')
+      .send({
+        name: '#js'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: '#js', 
+          _id: expect.any(String)
+        });
+      });
+  });
 });
