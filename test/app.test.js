@@ -26,7 +26,9 @@ describe('app tests', ()=> {
     it('can get a list of tweets', ()=> {
         return Tweet
             .create({
-                handle: 'emily', body: 'my cool tweet' })
+                handle: 'emily',
+                body: 'my cool tweet'
+            })
             .then(()=> {
                 return request(app)
                     .get('/tweets');
@@ -34,7 +36,24 @@ describe('app tests', ()=> {
             .then(res => {
                 expect(res.body).toHaveLength(1);
             });
-        
+    });
 
+    it('can get a list of tweets by id', ()=> {
+        return Tweet 
+            .create({ 
+                handle: 'emily', 
+                body: 'my really cool tweet'
+            })
+            .then((createdTweet)=> {
+                return request(app)
+                    .get(`/tweets/${createdTweet._id}`) 
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    handle: 'emily',
+                    body: 'my really cool tweet',
+                    _id: expect.any(String)
+                });
+            });
     });
 });
