@@ -1,6 +1,7 @@
 const app = require('../lib/app');
 const request = require('supertest');
 const Tweet = require('../lib/models/Tweet');
+const Tag = require('../lib/models/Tag');
 
 describe('Tweet route', () => {
     afterAll(() => {
@@ -90,6 +91,9 @@ describe('Tweet route', () => {
 });
 
 describe('tag route', () => {
+    afterAll(() => {
+        return Tag.drop();
+    });
     it('can create a tag', () => {
         return request(app)
             .post('/tags')
@@ -102,6 +106,29 @@ describe('tag route', () => {
                     _id: expect.any(String)
                 });
             });
+    });
+    it('can get all tags', () => {
+        return request(app)
+            .get('/tags')
+            .then(res => {
+                expect(res.body).toHaveLength(1);
+            });
+    });
+
+    it('can get tag by ID', () => {
+        return Tag
+            .create({ name: 'annas tag' })
+            .then(tag => {
+                return request(app)
+                    .get(`/tags/${tag._id}`);
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    name: 'annas tag',
+                    _id: expect.any(String)
+                });
+            });
+            
     });
 });
 
