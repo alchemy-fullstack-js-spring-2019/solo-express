@@ -4,9 +4,9 @@ const Tweet = require('../lib/models/Tweet');
 
 describe('ROUTE TESTS', () => {
 
-  afterEach(() => {
-    return Tweet.drop();
-  });
+  // afterEach(() => {
+  //   return Tweet.drop();
+  // });
 
   it('posts new tweet', () => {
     return request(app)
