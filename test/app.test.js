@@ -111,4 +111,19 @@ describe('app routes', () => {
         expect(res.body).toHaveLength(1);
       });
   });
+  it('can get a tag by id', () => {
+    return Tag
+      .create({ name: '#js' })
+      .then(createdTag => {
+        return request(app)
+          .get(`/tags/${createdTag._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({ 
+          name: '#js',
+          _id: expect.any(String)
+        });
+      });
+    });
+  
 });
