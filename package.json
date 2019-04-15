@@ -8,8 +8,10 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "test": "jest --verbose",
+    "test:watch": "npm run test -- --watch",
+    "start": "node server.js",
+    "start:watch": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -25,5 +27,9 @@
   "devDependencies": {
     "eslint": "^5.16.0",
     "jest": "^24.7.1"
+  },
+  "dependencies": {
+    "nodemon": "^1.18.11",
+    "supertest": "^4.0.2"
   }
 }
