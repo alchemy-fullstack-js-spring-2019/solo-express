@@ -94,6 +94,7 @@ describe('tag route', () => {
     afterAll(() => {
         return Tag.drop();
     });
+
     it('can create a tag', () => {
         return request(app)
             .post('/tags')
