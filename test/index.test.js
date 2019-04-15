@@ -36,4 +36,20 @@ describe('ROUTE TESTS', () => {
       });
   });
 
+  it('find tweet by id', () => {
+    return Tweet
+      .create({ handle: 'Parker', twit: '√' })
+      .then(newTweet => {
+        return request(app)
+          .get(`/tweets/${newTweet._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'Parker',
+          twit: '√',
+          _id: expect.any(String)
+        });
+      });
+  });
+
 });
