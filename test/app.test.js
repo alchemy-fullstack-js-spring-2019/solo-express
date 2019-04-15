@@ -68,5 +68,20 @@ describe('app routes', () => {
                 });
             });
     });
+
+    it('deletes a tweet by id', () => {
+        return Tweet
+            .create({
+                handle: 'anna',
+                body: 'annas tweet'
+            })
+            .then(tweet => {
+                return request(app)
+                    .delete(`/tweets/${tweet._id}`);
+            })
+            .then(res => {
+                expect(res.body).toEqual({ deleted: 1 });
+            });
+    }); 
 });
 
