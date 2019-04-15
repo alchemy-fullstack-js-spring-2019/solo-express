@@ -45,5 +45,28 @@ describe('app routes', () => {
                 });
             });
     });
+
+    it('can update a tweet by id', () => {
+        return Tweet
+            .create({
+                handle: 'anna',
+                body: 'annas tweet'
+            })
+            .then(tweet => {
+                return request(app)
+                    .put(`/tweets/${tweet._id}`)
+                    .send({
+                        handle: 'anna',
+                        body: 'my updated tweet'
+                    });
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    handle: 'anna',
+                    body: 'my updated tweet',
+                    _id: expect.any(String)
+                });
+            });
+    });
 });
 
