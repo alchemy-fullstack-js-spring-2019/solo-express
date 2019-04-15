@@ -3,7 +3,7 @@ const request = require('supertest');
 const Tweet = require('../lib/models/Tweet');
 
 describe('app tests', ()=> {
-    afterEach(()=> {
+    beforeEach(()=> {
         return Tweet.drop();
     });
 
@@ -76,23 +76,6 @@ describe('app tests', ()=> {
                     handle: 'emily',
                     body: 'my really silly tweet',
                     _id: expect.any(String)
-                });
-            });
-    });
-
-    it('can delete a tweet by id', ()=> {
-        return Tweet
-            .create({
-                handle: 'emily', 
-                body: 'feel cute might delete'
-            })
-            .then(createdTweet => {
-                return request(app)
-                    .delete(`/tweets/${createdTweet._id}`);
-            })
-            .then(res => {
-                expect(res.body).toEqual({
-                    deleted: 1
                 });
             });
     });
