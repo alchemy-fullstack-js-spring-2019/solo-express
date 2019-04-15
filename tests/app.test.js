@@ -50,4 +50,36 @@ describe('tweet router', () => {
         });
     });
 
+    it('updates a tweet by id', ()  => {
+        return Tweet.create({ handle: 'hanc', body: 'old body' })
+        .then(tweet => {
+            return request(app)
+            .put(`/tweets/${tweet._id}`)
+            .send({
+                handle: 'hank',
+                body: 'new body'
+            });
+        })
+        .then(results => {
+            expect(results.body).toEqual({
+                handle: 'hank',
+                body: 'new body',
+                _id: expect.any(String)
+            });
+        });
+    });
+
+    it('deletes a tweet by id', () => {
+        return Tweet.create({ handle: 'joe', body: 'bark bark' })
+        .then(tweet => {
+            return request(app)
+            .delete(`/tweets/${tweet._id}`);
+        })
+        .then(result => {
+            expect(result.body).toEqual({
+                deleted: 1
+            });
+        });
+    });
+
 });
