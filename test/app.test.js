@@ -66,4 +66,14 @@ describe('Tweet route', () => {
         });
       });
   });
+
+  it('responds with deletion object after deleting by ID on DELETE', () => {
+    return request(app)
+      .post('/tweets')
+      .send({ handle: 'Tommy', body: 'First tweet' })
+      .then(res => request(app).delete(`/tweets/${res.body._id}`))
+      .then(res => {
+        expect(res.body).toEqual({ deleted: 1 });
+      });
+  });
 });
