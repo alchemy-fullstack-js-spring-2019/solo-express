@@ -145,4 +145,17 @@ describe('app routes', () => {
           });
       });
   });
+  it('can find a user by id and delete', () => {
+    return User
+      .create({ name: 'kevin', sign: 'pisces' })
+      .then((createdUser) => {
+        return request(app)
+          .delete(`/users/${createdUser._id}`)
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          deleted: 1
+        });
+      });
+  });
 });
