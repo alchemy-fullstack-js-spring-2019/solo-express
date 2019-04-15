@@ -49,4 +49,21 @@ describe('Tweet route', () => {
         });
       });
   });
+
+  it('responds with an updated tweet by ID on PUT', () => {
+    return request(app)
+      .post('/tweets')
+      .send({ handle: 'Tony', body: 'First tweet' })
+      .then(res => request(app)
+        .put(`/tweets/${res.body._id}`)
+        .send({ handle: 'Tommy', body: 'Fixed tweet' })
+      )
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'Tommy',
+          body: 'Fixed tweet',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
