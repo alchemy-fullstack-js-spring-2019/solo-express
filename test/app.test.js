@@ -60,6 +60,19 @@ describe('tag routes', () => {
         });
       });
   });
+  
+  it('deletes a tag by id', () => {
+    return Tag.create({ name: '#badtag' })
+      .then(badTag => {
+        return request(app)
+          .delete(`/tags/${badTag._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          deleted: 1
+        });
+      });
+  });
 
 });
 
