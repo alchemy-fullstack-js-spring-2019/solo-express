@@ -3,6 +3,10 @@ const request = require('supertest');
 const Tweet = require('../lib/models/Tweet');
 
 describe('app routes', () => {
+    afterAll(() => {
+        return Tweet.drop();
+    });
+    
     it('can create a new tweet', () => {
         return request(app)
             .post('/tweets')
@@ -23,7 +27,8 @@ describe('app routes', () => {
         return request(app)
             .get('/tweets')
             .then(res => {
-                expect(res.body.length).not.toEqual(0);
+                console.log(res.body);
+                expect(res.body.length).toEqual(1);
             });
     });
 
