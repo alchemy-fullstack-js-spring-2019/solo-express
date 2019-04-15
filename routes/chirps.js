@@ -27,4 +27,15 @@ module.exports = Router()
         res.send(foundChirp);
       });
   })
-;
+
+  .put('/:id', (req, res) => {
+    const { id } = req.params;
+    const {
+      handle,
+      body
+    } = req.body;
+    Chirps.findByIdAndUpdate(id, { handle, body })
+      .then(updatedChirp => {
+        res.send(updatedChirp);
+      });
+  })

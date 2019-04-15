@@ -52,7 +52,8 @@ describe('Testing chirp message board', () => {
     return Chirps.create({ handle: 'Robyn', body: 'grrr' })
       .then(createdChirp => {
         return request(app)
-          .put(`/chirps/${createdChirp._id}`, { handle: 'Robyn', body: 'poo-tee-weet' });
+          .put(`/chirps/${createdChirp._id}`)
+          .send({ handle: 'Robyn', body: 'poo-tee-weet' });
       })
       .then(res => {
         expect(res.body).toEqual({
