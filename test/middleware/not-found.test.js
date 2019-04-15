@@ -15,5 +15,5 @@ describe('middleware test', () => {
     expect(status).toHaveBeenCalledWith(404);
     expect(send).toHaveBeenCalledWith({ error: 'Not Found' });
   });
-  
+
 });
