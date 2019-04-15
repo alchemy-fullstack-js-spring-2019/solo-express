@@ -3,8 +3,6 @@ const app = require('../lib/app');
 const Tweet = require('../lib/models/Tweet');
 const mkdirp = require('mkdirp'); 
 
-
-
 describe('app routes', () => {
     beforeAll(done => {
         mkdirp('./data/tweets', done);
@@ -12,6 +10,7 @@ describe('app routes', () => {
     afterAll(() => {
         return Tweet.drop();
     });
+
     // it('can create a new tweet', () => {
     //     return request(app)
     //         .post('/tweets')
@@ -27,11 +26,30 @@ describe('app routes', () => {
     //             });
     //         });
     // });
-    it('can get tweets', () => {
+
+    it('can get all tweets', () => {
         return request(app)
             .get('/tweets')
             .then(res => {
                 console.log(res.body);
+                //expect res.body to equal created tweets
             });
     });
+
+    it('can get a tweet by id', () => {
+        return request(app)
+            .post('/tweets')
+            .send({
+                handle: 'bonnie',
+                body: 'my first tweet'
+            })
+            .then(res => res.body._id)
+            .then(id => {
+                console.log('id', id);
+            });
+    });
+
+    
+
+
 });
