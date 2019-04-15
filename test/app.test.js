@@ -1,8 +1,9 @@
 const request = require('supertest');
 const app = require('../lib/app');
 const Tweet = require('../lib/models/Tweet');
+const Bug = require('../lib/models/Bug');
 
-describe('app routes', () => {
+describe('tweet routes', () => {
 
   afterEach(() =>{
     Tweet.drop();
@@ -77,5 +78,79 @@ describe('app routes', () => {
         expect(res.body).toEqual(({ deleted: 1 }));
       });
   });
+
+});
+
+describe('bug routes', () => {
+
+  afterEach(() => {
+    Bug.drop();
+  });
+
+  it('creates bug', () => {
+    return request(app)
+      .post('/bugs')
+      .send({ species: 'daddy long leg', info: 'tall spiders' })
+      .then(res => {
+        expect(res.body).toEqual({ species: 'daddy long leg', info: 'tall spiders', _id: expect.any(String) });
+      });
+  });
+ 
+  it('gets all bugs', () => {
+    return Bug.create({ species: 'daddy long leg', info: 'tall spiders' })
+      .then(() => {
+        return request(app)
+          .get('/bugs')
+          .then(res => {
+            expect(res.body).toHaveLength(1);
+          });
+      });
+  });
+ 
+  it('gets bug by id', () => {
+    return Bug.create({ species: 'daddy long leg', info: 'tall spiders' })
+      .then(createdBug => {
+        return request(app)
+          .get(`/bugs/${createdBug._id}`)
+          .then(res => {
+            expect(res.body).toEqual({
+              species: 'daddy long leg', 
+              info: 'tall spiders',
+              _id: expect.any(String)
+            });
+          });
+      });
+  });
+ 
+  it('gets bug by id and update', () => {
+    return Bug.create({ species: 'daddy long leg', info: 'tall spiders' })
+      .then(createdBug => {
+        return request(app)
+          .put(`/bugs/${createdBug._id}`)
+          .send({ 
+            species: 'daddy long leg', 
+            info: 'really scary spiders' 
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({ 
+          species: 'daddy long leg', 
+          info: 'really scary spiders', 
+          _id: expect.any(String) 
+        });
+      });      
+  });
+ 
+  it('gets bug by id and delete', () => {
+    return Bug.create({ species: 'daddy long leg', info: 'tall spiders' })
+      .then(createdBug => {
+        return request(app)
+          .delete(`/bugs/${createdBug._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({ deleted: 1 });
+      });      
+  });
+
 
 });
