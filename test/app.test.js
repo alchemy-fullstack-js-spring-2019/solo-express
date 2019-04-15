@@ -32,5 +32,20 @@ describe('Testing chirp message board', () => {
         expect(res.body).toHaveLength(1);
       });
   });
+
+  it('gets a single chirp by id', () => {
+    return Chirps.create({ handle: 'Jay', body: 'tee-toooo' })
+      .then(createdChirp => {
+        return request(app)
+          .get(`/chrips/${createdChirp._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'Jay',
+          body: 'tee-toooo',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
 
