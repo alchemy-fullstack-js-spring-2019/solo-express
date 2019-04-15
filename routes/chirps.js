@@ -11,4 +11,11 @@ module.exports = Router()
       .then(createdChirp => {
         res.send(createdChirp);
       });
+  })
+
+  .get('/', (req, res) => {
+    Chirps.find()
+      .then(foundChirps => {
+        res.send(foundChirps);
+      });
   });
