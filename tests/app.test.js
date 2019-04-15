@@ -34,4 +34,20 @@ describe('tweet router', () => {
         });
     });
 
+    it('finds a specific tweet by id', () => {
+        return Tweet
+        .create({ handle: 'joe', body: 'ruff' })
+        .then(tweet => {
+            return request(app)
+            .get(`/tweets/${tweet._id}`);
+        })
+        .then(result => {
+            expect(result.body).toEqual({
+                handle: 'joe',
+                body: 'ruff',
+                _id: expect.any(String)
+            });
+        });
+    });
+
 });
