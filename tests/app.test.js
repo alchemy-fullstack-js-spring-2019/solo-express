@@ -36,8 +36,16 @@ describe('app routes', () => {
   it('can find a tweet by id', () => {
     return Tweet
       .create({ handle: 'bob', body: 'my cool tweet' })
-      .then(() => {
-        return 
+      .then((createdTweet) => {
+        return request(app)
+          .get(`/tweets/${createdTweet._id}`);
       })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'bob',
+          body: 'my cool tweet',
+          _id: expect.any(String)
+        });
+      });
   })
 });
