@@ -122,4 +122,17 @@ describe('tags routes', () => {
         });
       });
   });
+
+  it('can get a list of tags', () => {
+    return Tags.create({
+      name: '#ls'
+    })
+      .then(() => {
+        return request(app)
+          .get('/tags');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 });
