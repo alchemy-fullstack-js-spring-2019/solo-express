@@ -1,5 +1,6 @@
 const app = require('../lib/app');
 const request = require('supertest');
+const Tweet = require('../lib/models/Tweet');
 
 describe('app routes', () => {
     it('can create a new tweet', () => {
@@ -13,8 +14,36 @@ describe('app routes', () => {
                 expect(res.body).toEqual({
                     handle: 'ryan',
                     body: 'my first tweet',
-                    id: expect.any(String)
+                    _id: expect.any(String)
+                });
+            });
+    });
+
+    it('can find all tweets', () => {
+        return request(app)
+            .get('/tweets')
+            .then(res => {
+                expect(res.body.length).not.toEqual(0);
+            });
+    });
+
+    it('can find a tweet by id', () => {
+        return Tweet
+            .create({
+                handle: 'anna',
+                body: 'annas tweet'
+            })
+            .then(tweet => {
+                return request(app)
+                    .get(`/tweets/${tweet._id}`);
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    handle: 'anna',
+                    body: 'annas tweet',
+                    _id: expect.any(String)
                 });
             });
     });
 });
+
