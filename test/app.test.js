@@ -31,6 +31,20 @@ describe('tag routes', () => {
         expect(res.body).toHaveLength(1);
       });
   });
+  
+  it('gets a tag by id', () => {
+    return Tag.create({ name: '#getbyid' })
+      .then(createdTag => {
+        return request(app)
+          .get(`/tags/${createdTag._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: '#getbyid',
+          _id: expect.any(String)
+        });
+      });
+  });
 
 });
 
