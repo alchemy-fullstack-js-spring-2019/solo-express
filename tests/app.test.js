@@ -150,7 +150,7 @@ describe('app routes', () => {
       .create({ name: 'kevin', sign: 'pisces' })
       .then((createdUser) => {
         return request(app)
-          .delete(`/users/${createdUser._id}`)
+          .delete(`/users/${createdUser._id}`);
       })
       .then(res => {
         expect(res.body).toEqual({
