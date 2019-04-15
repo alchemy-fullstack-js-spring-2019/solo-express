@@ -46,4 +46,4 @@ module.exports = Router()
       .then(deletedObj => {
         res.send(deletedObj);
       });
-  })
+  });
