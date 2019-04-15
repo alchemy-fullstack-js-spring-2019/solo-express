@@ -9,7 +9,7 @@ describe('app routes', () => {
 
   it('can create a new tweet', () => {
     return request(app)
-      .post('./tweets')
+      .post('/tweets')
       .send({
         handle: 'gilgamesh',
         body: 'enkidu ?'
@@ -20,6 +20,17 @@ describe('app routes', () => {
           body: 'enkidu ?',
           _id: expect.any(String)
         });
+      });
+  });
+  it('can get a list of tweets', () => {
+    return Tweet
+      .create({ handle: 'gilgamesh', body: 'hey enkidu?' })
+      .then(() => {
+        return request(app)
+          .get('/tweets');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
       });
   });
 });
