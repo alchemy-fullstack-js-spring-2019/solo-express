@@ -6,7 +6,7 @@ describe('app routes', () => {
     return request(app)
       .get('/hello')
       .then(res => {
-        expect(res.text).toEqual('hi');
+        expect(res.body).toEqual({ name: 'Mal' });
       });
   });
 });
