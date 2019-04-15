@@ -151,4 +151,23 @@ describe('tags routes', () => {
         });
       });
   });
+
+  it('can update a tag by id', () => {
+    return Tags.create({
+      name: '#ls'
+    })
+      .then(createdTag => {
+        return request(app)
+          .put(`/tags/${createdTag._id}`)
+          .send({
+            name: '#lys'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: '#lys',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
