@@ -53,6 +53,20 @@ describe('app routes', () => {
   });
 
   it('can find a tweet by id and update', () => {
+    return Tweet.create({
+      handle: 'test',
+      text: 'test'
+    })
+      .then(tweet => {
+        return request(app)
+          .put(`/tweets/${tweet._id}`).send({ handle: 'dog', text: 'updated tweet' })
+          .then(res => {
+            expect(res.body.handle).toEqual('dog');
+          });
+      });
+  });
+
+  it('can get a tweet by id', () => {
     return request(app)
       .post('/tweets')
       .send({
@@ -61,11 +75,15 @@ describe('app routes', () => {
       })
       .then(tweet => {
         return request(app)
-          .put(`/tweets/${tweet.body._id}`).send({ handle: 'dog' })
-          .then(res => {
-            expect(res.body.handle).toEqual('dog');
-          });
+          .delete(`/tweets/${tweet.body._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          deleted: 1
+        });
       });
   });
+
+  
 });
 
