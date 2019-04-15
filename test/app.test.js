@@ -37,7 +37,7 @@ describe('Testing chirp message board', () => {
     return Chirps.create({ handle: 'Jay', body: 'tee-toooo' })
       .then(createdChirp => {
         return request(app)
-          .get(`/chrips/${createdChirp._id}`);
+          .get(`/chirps/${createdChirp._id}`);
       })
       .then(res => {
         expect(res.body).toEqual({

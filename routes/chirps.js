@@ -18,4 +18,13 @@ module.exports = Router()
       .then(foundChirps => {
         res.send(foundChirps);
       });
-  });
+  })
+
+  .get('/:id', (req, res) => {
+    const { id } = req.params;
+    Chirps.findById(id)
+      .then(foundChirp => {
+        res.send(foundChirp);
+      });
+  })
+;
