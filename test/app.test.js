@@ -1,6 +1,24 @@
 const request = require('supertest');
 const app = require('../lib/app.js');
 const Chirps = require('../models/Chirps');
+const Growls = require('../models/Growls');
+
+describe('Testing growl message board', () => {
+  it('can post a growl', () => {
+    return request(app)
+      .post('/growls')
+      .send({ handle: 'Grizz Lee', body: 'Grrr rrr' })
+      .then(createdGrowl => {
+        expect(createdGrowl).toEqual({
+          handle: 'Grizz Lee',
+          body: 'Grrr rrr',
+          _id: expect.any(String)
+        });
+      });
+  });
+});
+
+
 
 describe('Testing chirp message board', () => {
   afterEach(() => {
