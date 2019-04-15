@@ -19,4 +19,18 @@ describe('tag router', () => {
             });
         });
     });
+
+    it('finds all tags', () => {
+        return Tag
+        .create({ tag: '#servers' })
+        .then(() => {
+            return request(app)
+            .get('/tags');
+        }) 
+        .then(tags => {
+            console.log(tags.body);
+            expect(tags.body).toHaveLength(1);
+        });
+        
+    });
 });
