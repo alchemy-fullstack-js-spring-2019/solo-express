@@ -28,9 +28,22 @@ describe('tag router', () => {
             .get('/tags');
         }) 
         .then(tags => {
-            console.log(tags.body);
             expect(tags.body).toHaveLength(1);
         });
-        
+    });
+
+    it('finds a tag by id', () => {
+        Tag
+        .create({ tag: '#clients' })
+        .then(() => {
+            return request(app)
+            .get(`/tags/${tag._id}`);
+        })
+        .then(result => {
+            expect(result.body).toEqual({
+                tag: '#clients',
+                _id: expect.any(String)
+            });
+        });
     });
 });
