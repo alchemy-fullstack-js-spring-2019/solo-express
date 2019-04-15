@@ -8,8 +8,8 @@ describe('Testing growl message board', () => {
     return request(app)
       .post('/growls')
       .send({ handle: 'Grizz Lee', body: 'Grrr rrr' })
-      .then(createdGrowl => {
-        expect(createdGrowl).toEqual({
+      .then(res => {
+        expect(res.body).toEqual({
           handle: 'Grizz Lee',
           body: 'Grrr rrr',
           _id: expect.any(String)
