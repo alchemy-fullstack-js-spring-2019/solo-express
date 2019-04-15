@@ -48,7 +48,6 @@ describe('app routes', () => {
     it('can update a tweet by its id', () => {
         return Tweet.create({ handle: 'Colin', body: 'this tweet will be updated' })
             .then(updatedTweet => {
-                console.log(updatedTweet._id);
                 return request(app)
                     .put(`/tweets/${updatedTweet._id}`)
                     .send({
@@ -57,7 +56,6 @@ describe('app routes', () => {
                     });
             })
             .then(response => {
-                console.log(response.body);
                 expect(response.body).toEqual({
                     handle: 'Colin',
                     body: 'This was updated',
