@@ -22,9 +22,9 @@ describe('app routes', () => {
         });
       });
   });
-  it('can get a list of tweets', () => {
+  it.only('can get a list of tweets', () => {
     return Tweet
-      .create({ handle: 'gilgamesh', body: 'hey enkidu?' })
+      .create({ handle: 'gilgamesh', body: 'enkidu ?' })
       .then(() => {
         return request(app)
           .get('/tweets');

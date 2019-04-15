@@ -1,9 +1,6 @@
-const express = require('express');
-const app = express();
+const app = require('./lib/app');
 
-app.get('./hello', (req, res) => {
-  res.end('hi');
+app.listen(7890, () => {
+  console.log('started on port 7890');
 });
-
-module.exports = app;
 
