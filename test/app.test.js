@@ -42,7 +42,7 @@ describe('app routes', () => {
     // this test technically is testing both post and get,
     // but I like it for practice so I'll keep it and make a 
     // new get test
-    it('can post a tween and then get it by id', () => {
+    it('can post a tweet and then get it by id', () => {
         return request(app)
             .post('/tweets')
             .send({
