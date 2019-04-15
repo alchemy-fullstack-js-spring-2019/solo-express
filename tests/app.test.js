@@ -63,7 +63,7 @@ describe('app routes', () => {
         expect(res.body).toEqual({
           handle: 'dignan',
           body: 'bob maplethorpe, potential getaway driver, go!',
-          id: expect.any(String)
+          _id: expect.any(String)
         });
       });
   });
