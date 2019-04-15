@@ -1,6 +1,26 @@
 const app = require('../lib/app');
 const request = require('supertest');
 const Tweet = require('../lib/models/Tweet');
+const Tag = require('../lib/models/Tag');
+
+describe('tag routes', () => {
+  
+  afterEach(() => {
+    Tag.drop();
+  });
+
+  it('creates a tag', () => {
+    return request(app)
+      .post('/tags')
+      .send({ name: '#test' })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: '#test',
+          _id: expect.any(String)
+        });
+      });
+  });
+});
 
 describe('tweet routes', () => {
 
