@@ -13,4 +13,9 @@ module.exports = Router()
       });
   })
 
-  
+  .get('/', (req, res, next) => {
+    Growls.find()
+      .then(listOfGrowls => {
+        res.send(listOfGrowls);
+      });
+  })

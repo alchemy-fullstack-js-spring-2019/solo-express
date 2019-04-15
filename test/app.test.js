@@ -19,6 +19,17 @@ describe('Testing growl message board', () => {
         });
       });
   });
+
+  it('gets a list of all growls', () => {
+    return Growls.create({ handle: 'Tigger', body: 'bounce' })
+      .then(() => {
+        return request(app)
+          .get('/growls');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 });
 
 
