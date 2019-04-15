@@ -33,7 +33,42 @@ describe('app routes', () => {
     })
 
 });
+//need to test
 it('can get a tweet by id', () => {
     return Tweet
         .create({ handle: 'olli', body: 'my tweet' })
+        .then(createdTweet=>{
+            return request(app)
+            .get(`/tweets/${createdTweet._id}`);
+        })
+        .then(res=>{
+            expect(res.body).toEqual({ handle:'olli' , body: 'my tweet', _id: expect.any(String)})
+        })
+})
+
+//not tested
+it('can update a tweet by id,', ()=>{
+    return Tweet.create({handle: 'ryan', body:'my tweet'})
+    .then(tweet=>{
+        return request(app)
+        .put(`/tweets/${tweet._id}`)
+        .send({
+            handle: 'ryan',
+            body: 'better tweeet'
+        })
+        .then(updatedTweet=>{
+            expect(updatedTweet.body).toEqual({ handle:'ryan', body:'better tweet', _id: expect.any(String)})
+        })
+    })
+})
+//not finished
+it('can delete a tweet by id', ()=>{
+    return Tweet.create({handle:'Ryan', body:'your weet'})
+    .then(tweet=>{
+        return request(app)
+        .delete(`/tweets/${tweet._id}`)
+    })
+    .then(deleteCount=>{
+        expect(deleteCount).toEqual({deleted:1})
+    })
 })
