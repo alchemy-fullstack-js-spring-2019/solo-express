@@ -100,4 +100,15 @@ describe('app routes', () => {
         });
       });
   });
+  it('can find all users', () => {
+    return User
+      .create({ name: 'erin', sign: 'libra' })
+      .then(() => {
+        return request(app)
+          .get('/users');
+      })
+      .then(res => {
+        expect(res.body).toHaveLength(1);
+      });
+  });
 });
