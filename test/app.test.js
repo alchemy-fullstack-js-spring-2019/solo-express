@@ -4,6 +4,9 @@ const Chirps = require('../models/Chirps');
 const Growls = require('../models/Growls');
 
 describe('Testing growl message board', () => {
+  afterEach(() => {
+    return Growls.drop();
+  });
   it('can post a growl', () => {
     return request(app)
       .post('/growls')
