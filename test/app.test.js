@@ -63,7 +63,7 @@ describe('app routes', () => {
       });
   });
 
-  it('can get a troll by id', () => {
+  it('can find and delete a troll by id', () => {
     return request(app)
       .post('/trolls')
       .send({
