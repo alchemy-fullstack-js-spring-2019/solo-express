@@ -111,4 +111,18 @@ describe('tweet tests', ()=> {
                 });
             });
     });
+
+    it('will get all tags', ()=> {
+        return Tag
+            .create({
+                name: '#coolstuff'
+            })
+            .then(()=> {
+                return request(app)
+                    .get('/tags');
+            })
+            .then(res => {
+                expect(res.body).toHaveLength(1);
+            });
+    });
 });
