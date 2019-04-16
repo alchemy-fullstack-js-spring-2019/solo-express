@@ -132,5 +132,33 @@ describe('tags resource', () => {
       });
   });
 
-});
+  it('can update a tag by ID', () => {
+    return Tag.create({ name: 'testMeName' })
+      .then(tag => {
+        return request(app)
+          .put(`/tags/${tag._id}`)
+          .send({
+            name: 'testMeName'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          name: 'testMeName',
+          _id: expect.any(String)
+        });
+      });
+  });
 
+  it('can delete a tag by id', () => {
+    return Tag.create({ name: 'chris' })
+      .then(tag => {
+        return request(app)
+          .delete(`/tags/${tag._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          deleted: 1
+        });
+      });
+  });
+});
