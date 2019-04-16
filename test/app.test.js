@@ -163,4 +163,20 @@ describe('tweet tests', ()=> {
                 });
             });
     });
+
+    it('can delete a tag by id', ()=> {
+        return Tag
+            .create({
+                name: '#notagoodtag'
+            })
+            .then(createdTag => {
+                return request(app)
+                    .delete(`/tags/${createdTag._id}`);
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    deleted: 1
+                });
+            });
+    });
 });
