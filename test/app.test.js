@@ -50,4 +50,23 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('can update a tweet by id', () => {
+    return Tweet.create({ handle: 'Mal', body: 'my tweet' })
+      .then(tweet => {
+        return request(app)
+          .put(`/tweets/${tweet._id}`)
+          .send({
+            handle: 'Mal',
+            body: 'my good tweet'
+          });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          handle: 'Mal',
+          body: 'my good tweet',
+          _id: expect.any(String)
+        });
+      });
+  });
 });
