@@ -5,7 +5,8 @@ const Tag = require('../lib/models/Tag');
 
 describe('tweet tests', ()=> {
     beforeEach(()=> {
-        return Tweet.drop(), Tag.drop();
+        Tweet.drop();
+        Tag.drop();
     });
 
     it('will post a tweet to data', ()=> {
@@ -123,6 +124,23 @@ describe('tweet tests', ()=> {
             })
             .then(res => {
                 expect(res.body).toHaveLength(1);
+            });
+    });
+
+    it('will get a tag by id', ()=> {
+        return Tag
+            .create({
+                name: '#coolstuff'
+            })
+            .then((createdTag)=> {
+                return request(app)
+                    .get(`/tags/${createdTag._id}`);
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    name: '#coolstuff',
+                    _id: expect.any(String)
+                });
             });
     });
 });
