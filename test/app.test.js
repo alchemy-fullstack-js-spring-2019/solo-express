@@ -69,4 +69,17 @@ describe('app routes', () => {
         });
       });
   });
+
+  it('can delete a tweet by id', () => {
+    return Tweet.create({ handle: 'Mal', body: 'my tweet' })
+      .then(tweet => {
+        return request(app)
+          .delete(`/tweets/${tweet._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          deleted: 1
+        });
+      });
+  });
 });
