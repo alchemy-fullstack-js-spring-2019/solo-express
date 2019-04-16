@@ -1,10 +1,11 @@
 const { app } = require('../lib/app');
 const request = require('supertest');
 const Tweet = require('../lib/models/Tweet');
+const Tag = require('../lib/models/Tag');
 
-describe('app tests', ()=> {
+describe('tweet tests', ()=> {
     beforeEach(()=> {
-        return Tweet.drop();
+        return Tweet.drop(), Tag.drop();
     });
 
     it('will post a tweet to data', ()=> {
@@ -93,6 +94,20 @@ describe('app tests', ()=> {
             .then(res => {
                 expect(res.body).toEqual({
                     deleted: 1
+                });
+            });
+    });
+
+    it('will post a tag', ()=> {
+        return request(app)
+            .post('/tags')
+            .send({
+                name: '#coolstuff'
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    name: '#coolstuff',
+                    _id: expect.any(String)
                 });
             });
     });
