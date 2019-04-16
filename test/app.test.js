@@ -143,4 +143,24 @@ describe('tweet tests', ()=> {
                 });
             });
     });
+
+    it('can update a tag by id', ()=> {
+        return Tag
+            .create({
+                name: '#cooltag'
+            })
+            .then(createdTag => {
+                return request(app)
+                    .put(`/tags/${createdTag._id}`)
+                    .send({
+                        name: '#coolstuff'
+                    });
+            })
+            .then(res => {
+                expect(res.body).toEqual({
+                    name: '#coolstuff',
+                    _id: expect.any(String)
+                });
+            });
+    });
 });
