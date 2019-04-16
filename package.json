@@ -1,0 +1,32 @@
+{
+  "name": "solo-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --verbose",
+    "test:watch": "npm run test -- --watch",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/emilycre/solo-express.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/emilycre/solo-express/issues"
+  },
+  "homepage": "https://github.com/emilycre/solo-express#readme",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "jest": "^24.7.1",
+    "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "express": "^4.16.4",
+    "superagent": "^5.0.2",
+    "uuid": "^3.3.2"
+  }
+}
