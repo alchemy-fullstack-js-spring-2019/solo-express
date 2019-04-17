@@ -29,6 +29,7 @@
     "jest": "^24.7.1"
   },
   "dependencies": {
+    "express": "^4.16.4",
     "nodemon": "^1.18.11",
     "supertest": "^4.0.2"
   }
