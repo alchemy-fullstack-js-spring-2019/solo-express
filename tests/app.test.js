@@ -9,6 +9,14 @@ describe('app routes', () => {
     mkdirp('./data/tweets', done);
   });
 
+  beforeAll(done => {
+    mkdirp('./data/users', done);
+  });
+
+  beforeAll(done => {
+    mkdirp('./data/people', done);
+  });
+
   afterEach(() => {
     return Tweet.drop();
   });
