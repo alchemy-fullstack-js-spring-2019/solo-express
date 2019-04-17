@@ -1,8 +1,12 @@
 const request = require('supertest');
 const app = require('../lib/app');
 const Tweet = require('../lib/models/Tweet');
+const mkdirp = require('mkdirp');
 
 describe('app routes', () => {
+    beforeAll(done => {
+        mkdirp('./data/tweets', done);
+    });
     afterEach(() => {
         return Tweet.drop();
     });
