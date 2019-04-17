@@ -71,7 +71,7 @@ it('can delete a tweet by id', ()=>{
   return Tweet.create({ handle:'Ryan', body:'your weet' })
     .then(tweet=>{
       return request(app)
-        .delete(`/twets/${tweet._id}`);
+        .delete(`/tweets/${tweet._id}`);
     })
     .then(deleteCount=>{
      
