@@ -5,7 +5,7 @@ const mkdirp = require('mkdirp');
 
 describe('animal routes', () => {
     beforeAll(done => {
-        mkdirp('./data/tweets', done);
+        mkdirp('./data/animals', done);
     });
     afterEach(() => {
         return Animal.drop();
