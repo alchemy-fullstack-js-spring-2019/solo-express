@@ -5,10 +5,10 @@ const User = require('../lib/models/Users');
 const mkdirp = require('mkdirp');
 
 describe('app routes', () => {
-  beforeEach(() => {
-    return mkdirp;
+  beforeAll(done => {
+    mkdirp('./data/tweets', done);
   });
-  
+
   afterEach(() => {
     return Tweet.drop();
   });
