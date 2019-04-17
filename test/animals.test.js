@@ -1,8 +1,12 @@
 const request = require('supertest');
 const app = require('../lib/app');
 const Animal = require('../lib/models/Animals');
+const mkdirp = require('mkdirp');
 
 describe('animal routes', () => {
+    beforeAll(done => {
+        mkdirp('./data/tweets', done);
+    });
     afterEach(() => {
         return Animal.drop();
     });
@@ -68,7 +72,7 @@ describe('animal routes', () => {
         return Animal.create({ species: 'Bull', legs: 30 })
             .then(animal => {
                 return request(app)
-                    .delete(`/animals/${animal._id}`)
+                    .delete(`/animals/${animal._id}`);
             })
             .then(response => {
                 expect(response.body).toEqual({
