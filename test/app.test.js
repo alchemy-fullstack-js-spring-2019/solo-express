@@ -4,7 +4,7 @@ const Tweet = require('../lib/models/Tweet');
 const Tag = require('../lib/models/Tag');
 
 describe('app routes', () => {
-  afterEach(() => {
+  beforeEach(() => {
     return Tweet.drop(); // .DROPS!
   });
 
@@ -87,7 +87,7 @@ describe('app routes', () => {
 });
 
 describe('tags resource', () => {
-  afterEach(() => {
+  beforeEach(() => {
     return Tag.drop();
   });
 
