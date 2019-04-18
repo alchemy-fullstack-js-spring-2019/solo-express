@@ -28,50 +28,7 @@ requests that hit our server.
 ## Logger with response code
 
 Refactor our logging middleware so that the response
-status code is included in the message
-
-* Create and use a logging middleware in `lib/app.js`
-* On every request `console.log` the requested method
-* On every request `console.log` the requested pathname
-* On every request `console.log` the response status code
-  * Status is not set until the response is sent
-  * Listen to the `finish` event `.on('finish', () => {})`
-  * on finish you can `console.log`
-* E.G. `GET /tweets [200]`
-
-## BONUS: Logger with metrics
-
-Refactor our logging middleware so that the time until
-response is printed
-
-* Create and use a logging middleware in `lib/app.js`
-* On every request `console.log` the requested method
-* On every request `console.log` the requested pathname
-* On every request `console.log` the response status code
-* On every request `console.log` the response time
-* E.G. `GET /tweets [200] - 2ms`
-* HINT:
-  * create a `const startAt = Date.now();`
-
-## Not Found middleware
-
-Create middleware to handle not found. This middleware can be added after
-your routes. If none of your routes match, the not found middleware will
-trigger
-
-* create a `lib/middleware/notFound.js` file
-* export a middleware function `(req, res, next) => {}`
-* set the `res.status` to 404
-* respond with "Not Found"
-
-## Error handling
-
-Create middleware to handle errors. This middleware has to be added after
-all other middleware.
-
-* create a `lib/middleware/error.js` file
-* export an error middleware function `(err, req, res, next) => {}`
-  * NOTE:  the error middleware has a different signature
+status code is included in the messageature
 * set the `res.status` to 500
 * respond with `{ error: 'Internal Server Error' }`
 * BONUS:
