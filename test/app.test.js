@@ -67,6 +67,16 @@ describe('testing routes', () => {
         });
       });
   });
-
+  it('deletes a tweet', () => {
+    return TweetStore
+      .create({ twitterHandle: 'introooomode', tweet: 'heyhi' })
+      .then(createdTweet => {
+        return request(app)
+          .delete(`/tweets/${createdTweet._id}`);
+      })
+      .then(res => {
+        expect(res.body).toEqual({ deleted: 1 });
+      });
+  });
 
 });
