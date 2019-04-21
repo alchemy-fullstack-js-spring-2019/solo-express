@@ -59,8 +59,12 @@ describe('testing routes', () => {
             tweet: 'UPDATED TWEET'
           });
       }) 
-      .then(serverResponse => {
-        console.log(serverResponse.body);
+      .then(res => {
+        expect(res.body).toEqual({ 
+          twitterHandle: 'introooomode',
+          tweet: 'UPDATED TWEET',
+          _id: expect.any(String)
+        });
       });
   });
 
