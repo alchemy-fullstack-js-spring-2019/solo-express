@@ -28,7 +28,7 @@ describe('app routes', () => {
   //GetALL
   it('can get a list of tweets', () => {
     return Tweet
-      .create({ handle: 'human 002', body: 'Where lies the strangling fruit that came from the hand of the sinner'})
+      .create({ handle: 'human 002', body: 'Where lies the strangling fruit that came from the hand of the sinner' })
       .then(() => {
         return request(app)
           .get('/tweets');
@@ -55,16 +55,13 @@ describe('app routes', () => {
       });
   });
   
-  it('can delete a tweet by id',() => {
-    return Tweet.create({ handle: 'ryan', body: 'my tweet' })
-      .then(tweet => {
-        return request(app)
-          .delete(`/tweets/${tweet._id}`);
-      })
+  it('can delete a tweet by id', () => {
+    return request(app)
+      .post('/tweets')
+      .send({ handle: 'ugh', body: 'content' })
+      .then(res => request(app).delete(`/tweets/${res.body._id}`))
       .then(res => {
-        expect(res.body).toEqual({
-          deleted: 1
-        });
+        expect(res.body).toEqual({ deleted: 1 });
       });
   });
 });
