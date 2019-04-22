@@ -80,3 +80,5 @@ describe('testing routes', () => {
   });
 
 });
+
+console.log('hi');
