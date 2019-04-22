@@ -7,9 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "jest --verbose",
+    "test": "jest --verbose --runInBand",
     "test:watch": "npm run test -- --watch",
-    "start": "node server",
+    "start": "node server.js",
     "start:watch": "nodemon server.js"
   },
   "repository": {
