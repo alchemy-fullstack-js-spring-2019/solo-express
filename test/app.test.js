@@ -4,7 +4,7 @@ const Tweet = require('../lib/models/Tweet');
 const Tag = require('../lib/models/Tag');
 
 describe('Tweet route', () => {
-    afterAll(() => {
+    beforeAll(() => {
         return Tweet.drop();
     });
     
@@ -91,7 +91,7 @@ describe('Tweet route', () => {
 });
 
 describe('tag route', () => {
-    afterAll(() => {
+    beforeAll(() => {
         return Tag.drop();
     });
 
