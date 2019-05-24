@@ -1,29 +1,36 @@
 const request = require('supertest');
 const app = require('../lib/app');
 const Tweet = require('../lib/models/Tweet');
+const mkdirp = require('mkdirp');
 
 describe('app routes', () => {
-  afterEach(() => {
-    return Tweet.drop();
+  beforeAll(done => {
+    mkdirp('./data/tweets', done);
   });
+
+  afterEach(() => {
+    Tweet.drop();
+  });
+
   it('can create a new tweet', () => {
     return request(app)
       .post('/tweets')
       .send({
-        handle: 'ryan',
-        body: 'my first tweet'
+        handle: 'emily',
+        body: 'testing'
       })
       .then(res => {
         expect(res.body).toEqual({
-          handle: 'ryan',
-          body: 'my first tweet',
+          handle: 'emily',
+          body: 'testing',
           _id: expect.any(String)
         });
       });
   });
-  it('gets a list of tweets', () => {
+
+  it('can get a list of tweets', () => {
     return Tweet
-      .create({ handle: 'dave', body: 'a tweet' })
+      .create({ handle: 'emily', body: 'another test' })
       .then(() => {
         return request(app)
           .get('/tweets');
@@ -35,41 +42,44 @@ describe('app routes', () => {
 
   it('can get a tweet by id', () => {
     return Tweet
-      .create({ handle: 'dave', body: 'a tweet' })
+      .create({ handle: 'emily', body: 'wow, another test' })
       .then(createdTweet => {
         return request(app)
           .get(`/tweets/${createdTweet._id}`);
       })
       .then(res => {
         expect(res.body).toEqual({
-          handle: 'dave',
-          body: 'a tweet',
+          handle: 'emily',
+          body: 'wow, another test',
           _id: expect.any(String)
         });
       });
   });
 
-  it('updates a tweet by the id', () => {
-    return Tweet.create({ handle: 'dave', body: 'a good tweet' })
+  it('can updated a tweet by id', () => {
+    return Tweet.create({ handle: 'emily', body: 'yet another test' })
       .then(tweet => {
         return request(app)
           .put(`/tweets/${tweet._id}`)
           .send({
-            handle: 'dave',
-            body: 'a good tweet'
+            handle: 'emily',
+            body: 'yet another test'
           });
       })
       .then(res => {
         expect(res.body).toEqual({
-          handle: 'dave',
-          body: 'a good tweet',
+          handle: 'emily',
+          body: 'yet another test',
           _id: expect.any(String)
         });
       });
   });
 
-  it('deletes a tweet by the id', () => {
-    return Tweet.create({ handle: 'dave', body: 'a tweet' })
+  it('can delete a tweet by id', () => {
+    return Tweet.create({
+      handle: 'emily',
+      body: 'tests forever'
+    })
       .then(tweet => {
         return request(app)
           .delete(`/tweets/${tweet._id}`);
